@@ -17,18 +17,16 @@ int main()
 		i=0;
 		while(1)
 		{
-			
 			if(i==n)
 			{
-				//cout << packages << endl;
 				break;
 			}
-			cout << "Rem_k : " << rem_k << "   a[" << i << "]: " << a[i] << "   Packages : " << packages << endl;
+			//cout << "Rem_k : " << rem_k << "   a[" << i << "]: " << a[i] << "   Packages : " << packages << endl;
 			if(rem_k>=a[i])
 			{
 				rem_k-=(a[i]+1);
 				i++;
-				if(rem_k<0)
+				if(rem_k<=0 && i!=n)
 				{	
 					rem_k=k;
 					packages++;
@@ -36,16 +34,34 @@ int main()
 			}
 			else
 			{
-				a[i]-=rem_k;
-				rem_k=k;
-				packages++;
+				if(rem_k==k)
+				{
+					if(a[i]%k==0){
+						packages+=a[i]/k-1;
+						rem_k=0;
+						}
+					else{
+						packages+=a[i]/k;		
+						rem_k=rem_k-(a[i]%rem_k)-1;
+						}
+					i++;
+					if(rem_k<=0 && i!=n)
+					{
+						rem_k=k;
+						packages++;
+					}
+				}
+				else
+				{
+					a[i]-=rem_k;
+					rem_k=k;	
+					if(a[i]>0)
+						packages++;
+				}
 			}
-			 
 		}
 		if(packages==0)
 			packages++;
 		cout << packages << endl;
-
 	}
-
 }
